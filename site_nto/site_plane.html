@@ -1,0 +1,75 @@
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Управление Дроном</title>
+</head>
+<link rel="stylesheet" href="style.css">
+<body>
+
+    <div class="container">
+        <h1>Управление Дроном</h1>
+        <div>
+            <button id="takeoff">takeoff</button>
+            <button id="land">land</button>
+            <button id="killswitch">killswitch</button>
+            <button id="camera">camera</button>
+
+        </div>
+                <!-- Аудиоплеер с плейлистом -->
+        <h2>Аудиоплеер</h2>
+        <audio id="audioPlayer" controls>
+            <source id="audioSource" src="static/audio/track1.mp3" type="audio/mpeg">
+            Ваш браузер не поддерживает аудиоплеер.
+        </audio>
+        <br>
+        <select id="trackSelector">
+            <option value="static/audio/track1.mp3">Трек 1</option>
+            <option value="static/audio/track2.mp3">Трек 2</option>
+            <option value="static/audio/track3.mp3">Трек 3</option>
+            <option value="static/audio/track4.mp3">Трек 4</option>
+        </select>
+    </div>
+
+    <script>
+        const droneAPI = 'http://your-drone-api-endpoint'; // Замените на адрес вашего API
+
+        const trackSelector = document.getElementById('trackSelector');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const audioSource = document.getElementById('audioSource');
+
+        trackSelector.addEventListener('change', function() {
+            audioSource.src = this.value; // Обновляем источник
+            audioPlayer.load(); // Перезагружаем аудиоплеер
+        });
+
+        document.getElementById('takeoff').addEventListener('click', function() {
+            fetch(droneAPI + '/takeoff', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => console.log(data));
+        });
+
+        document.getElementById('land').addEventListener('click', function() {
+            fetch(droneAPI + '/land', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => console.log(data));
+        });
+
+        document.getElementById('killswitch').addEventListener('click', function() {
+            fetch(droneAPI + '/killswitch', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => console.log(data));
+        });
+
+        document.getElementById('camera').addEventListener('click', function() {
+            fetch(droneAPI + '/camera', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => console.log(data));
+        });
+    </script>
+
+</body>
+</html>
